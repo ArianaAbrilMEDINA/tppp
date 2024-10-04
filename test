@@ -1,0 +1,19 @@
+Ejercicio 1
+vuelosValidos [] -- True
+vuelosValidos [("Madrid", "Barcelona", 1.5), ("Barcelona", "Valencia", 2.0)] -- True
+vuelosValidos [("Madrid", "Madrid", 1.5)] -- False
+vuelosValidos [("Madrid", "Barcelona", 0)] -- False
+vuelosValidos [("Madrid", "Barcelona", 1.5), ("Madrid", "Barcelona", 1.5)] -- False
+vuelosValidos [("Madrid", "Barcelona", 1.5), ("Barcelona", "Madrid", -2.0)] -- False
+vuelosValidos [("Madrid", "Barcelona", 1.5), ("Barcelona", "Barcelona", 1.0)] -- False
+vuelosValidos [("Londres", "París", 1.0), ("París", "Berlín", 2.5), ("Berlín", "Londres", 3.0)] -- True
+
+Ejercicio 2
+ciudadesConectadas [] "Madrid" -- []
+ciudadesConectadas [("Madrid", "Barcelona", 2.0)] "Valencia" -- []
+ciudadesConectadas [("Madrid", "Barcelona", 2.0), ("Barcelona", "Valencia", 3.0)] "Madrid" -- ["Barcelona"]
+ciudadesConectadas [("Madrid", "Barcelona", 2.0), ("Barcelona", "Madrid", 3.0)] "Madrid" -- ["Barcelona"]
+ciudadesConectadas [("Madrid", "Barcelona", 2.0), ("Madrid", "Barcelona", 1.5), ("Barcelona", "Valencia", 3.0)] "Madrid" -- ["Barcelona"]
+ciudadesConectadas [("Madrid", "Barcelona", 2.0), ("Barcelona", "Valencia", 3.0), ("Valencia", "Madrid", 1.5)] "Barcelona" -- ["Madrid", "Valencia"]
+ciudadesConectadas [("Madrid", "Barcelona", 2.0), ("Barcelona", "Valencia", 3.0), ("Madrid", "Valencia", 2.5)] "Madrid" -- ["Barcelona", "Valencia"]
+ciudadesConectadas [("Madrid", "Barcelona", 2.0), ("Barcelona", "Madrid", 3.0), ("Madrid", "Valencia", 1.5)] "Barcelona" -- ["Madrid"]
