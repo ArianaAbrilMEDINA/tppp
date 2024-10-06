@@ -75,12 +75,14 @@ masRepetida (c:t:cs) | longitud (c:t:cs) ==2 =c
 -- EJERCICIO 5
 sePuedeLlegar :: AgenciaDeViajes -> Ciudad -> Ciudad -> Bool
 sePuedeLlegar [] _ _ = False
-sePuedeLlegar (x:xs) n m | longitud (eliminarRepetidos m (conexiones n m (x:xs))) == 0 = True
-                         | longitud (eliminarRepetidos m (conexiones n m (x:xs))) == 1 = True
+sePuedeLlegar (x:xs) n m | estaEnVuelo n x && longitud (quitar m (conexiones n m (x:xs))) == 0 = True
+                         | estaEnVuelo n x && longitud (quitar m (conexiones n m (x:xs))) == 1 = True
                          | otherwise = False
+-- LA FUNCIÓN ESTAENVUELO HABRÍA QUE MODIRFICARLA YA QUE ES UN PERTENECE. HABRÍA QUE VER COMO APLICAR UN PERTENECE GENÉRICO YA QUE YA HAY UNO CREADO
+estaEnVuelo :: Ciudad -> Vuelo -> Bool
+estaEnVuelo n (a,b,c) | n==a || n==b = True
+                    | otherwise = False
 
--- sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Cordoba", 5.0),("Cordoba", "BsAs", 8.0)] "BsAs" "Cordoba"
--- sePuedeLlegar [("BsAs", "Cordoba", 5.0)] "BsAs" "Cordoba"
 conexiones :: Ciudad -> Ciudad -> AgenciaDeViajes -> [Ciudad]
 conexiones  _ _ [] = []
 conexiones  n l ((c,t,m):cs) | l /= c && n == c  = [t] ++ conexiones t l cs
@@ -89,9 +91,6 @@ conexiones  n l ((c,t,m):cs) | l /= c && n == c  = [t] ++ conexiones t l cs
 longitud ::(Eq t) => [t] -> Integer
 longitud [] = 0
 longitud (x:xs) = 1 + longitud xs
-
--- conexiones "BsAs" "Cordoba" [("BsAs", "Rosario", 5.0), ("Rosario", "Cordoba", 5.0),("Cordoba", "BsAs", 8.0)]
--- conexiones "BsAs" "Cordoba" [("BsAs", "Cordoba", 5.0)]   
 
 
 -- EJERCICIO 7
