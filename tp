@@ -72,25 +72,21 @@ masRepetida (c:t:cs) | longitud (c:t:cs) ==2 =c
                      | otherwise = masRepetida (t:cs)
 -- masRepetida ["BsAs","Rosario","Rosario","Cordoba"]
 
--- EJERCICIO 5
+-- EJERCICIO 5 CORREGIDO
 sePuedeLlegar :: AgenciaDeViajes -> Ciudad -> Ciudad -> Bool
 sePuedeLlegar [] _ _ = False
-sePuedeLlegar (x:xs) n m | estaEnVuelo n x && longitud (quitar m (conexiones n m (x:xs))) == 0 = True
-                         | estaEnVuelo n x && longitud (quitar m (conexiones n m (x:xs))) == 1 = True
-                         | otherwise = False
--- LA FUNCIÓN ESTAENVUELO HABRÍA QUE MODIRFICARLA YA QUE ES UN PERTENECE. HABRÍA QUE VER COMO APLICAR UN PERTENECE GENÉRICO YA QUE YA HAY UNO CREADO
-estaEnVuelo :: Ciudad -> Vuelo -> Bool
-estaEnVuelo n (a,b,c) | n==a || n==b = True
-                    | otherwise = False
+sePuedeLlegar ((c,t,m):cs) origen destino  | origen == c && destino == t = True
+                                           | origen == c && destino /= t = hayVueloDirecto t destino cs  
+                                           | otherwise = sePuedeLlegar cs origen destino
 
-conexiones :: Ciudad -> Ciudad -> AgenciaDeViajes -> [Ciudad]
-conexiones  _ _ [] = []
-conexiones  n l ((c,t,m):cs) | l /= c && n == c  = [t] ++ conexiones t l cs
-                             | otherwise = conexiones n l cs
 
-longitud ::(Eq t) => [t] -> Integer
-longitud [] = 0
-longitud (x:xs) = 1 + longitud xs
+hayVueloDirecto :: Ciudad -> Ciudad -> AgenciaDeViajes -> Bool
+hayVueloDirecto _ _ [] = False
+hayVueloDirecto origen destino ((c,t,m):cs) | origen == c && destino == t = True  
+                                            | otherwise = hayVueloDirecto origen destino cs
+
+
+
 
 
 -- EJERCICIO 7
