@@ -65,10 +65,11 @@ auxiliar ((a,b,c):xs) = a:b:auxiliar xs
 -- auxiliar [("BsAs", "Rosario", 10.0), ("Rosario", "Cordoba", 7.0)]
 
 masRepetida :: [Ciudad] -> Ciudad
-masRepetida (c:t:cs) | c /= t && (laMasRepetidaInt c (c:t:cs)) > (laMasRepetidaInt t (c:t:cs)) = c
+masRepetida [x] = x
+masRepetida (c:t:cs) | longitud (c:t:cs) ==2 =c
+                     | c /= t && (laMasRepetidaInt c (c:t:cs)) > (laMasRepetidaInt t (c:t:cs)) = c
                      | c == t && (laMasRepetidaInt c (c:t:cs)) >= (laMasRepetidaInt t (c:t:cs)) = c
-                     | otherwise = masRepetida (eliminarRepetidos c (c:t:cs))
-
+                     | otherwise = masRepetida (t:cs)
 -- masRepetida ["BsAs","Rosario","Rosario","Cordoba"]
 
 -- EJERCICIO 5
