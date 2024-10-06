@@ -1,0 +1,20 @@
+ciudadMasConectada :: AgenciaDeViajes -> Ciudad
+ciudadMasConectada (x:xs) | cantidadDeciudades (ciudadesConectadas (x:xs) (head(ciudadesTotalesLimpias((x:xs))))) >= cantidadDeciudades ( ciudadesConectadas (x:xs) (laMayor (tail(ciudadesTotalesLimpias(x:xs))) (x:xs)) )=  (head(ciudadesTotalesLimpias (x:xs)))
+                          | otherwise= ((laMayor (tail(ciudadesTotalesLimpias (x:xs)))  (x:xs)))                                  -- {|agencia| > 0} - nunca pasa que agencia == []
+                          
+ciudadesTotalesLimpias :: AgenciaDeViajes -> [Ciudad] 
+ciudadesTotalesLimpias []=[]
+ciudadesTotalesLimpias (x:xs) = eliminarElementos (aplanarCiudades (x:xs))
+
+laMayor :: [Ciudad] -> AgenciaDeViajes-> Ciudad
+laMayor [x] (y:ys) = x
+laMayor (a:b:xs) (y:ys)| cantidadDeciudades (ciudadesConectadas (y:ys) a) < cantidadDeciudades (ciudadesConectadas (y:ys) b)= laMayor (b:xs) (y:ys)
+                       |otherwise= laMayor (a:xs) (y:ys)
+
+cantidadDeciudades ::  [Ciudad] -> Int
+cantidadDeciudades []=0
+cantidadDeciudades (x:xs)= 1 + cantidadDeciudades xs 
+
+aplanarCiudades :: AgenciaDeViajes  -> [Ciudad] 
+aplanarCiudades [] = []
+aplanarCiudades ((v11,v12,t):xs) = v11  : v12 : aplanarCiudades xs 
